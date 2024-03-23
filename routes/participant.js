@@ -80,24 +80,28 @@ async function getAQIValues(monitorId) {
     // console.log(aqiPM25);
 }
 
-var aqi = 50;
+var aqi = 50; // default value
 
 router.get('/', async (req,res) => {
-    monitorId = req.query.monitorId;
+    monitorId = req.query.monitorId
     // uses python-shell to create the img src from aqi.py
     try{
-        var {data, data2} = await generateImage(monitorId); 
-        console.log(data2)
-        data = JSON.stringify(data)
-        data2 = JSON.stringify(data2)
-        aqi = await getAQIValues(monitorId); 
-        if (monitorId) {
-            res.render("participant", { title: 'Participant View', aqi, monitorId, data, data2, aqiScore : Math.max(aqi.PM25, aqi.PM10)});
-            res.status(200);
-        }
-    }catch(error){
-        console.error(error);
+    var {data, data2} = await generateImage(monitorId); 
+    console.log(data2)
+    data = JSON.stringify(data)
+    data2 = JSON.stringify(data2)
+    aqi = await getAQIValues(monitorId); 
+    if (monitorId) {
+        res.render("success-page", { title: 'SUCCESS PAGE ',aqi,  aqiScore : Math.max(aqi.PM25, aqi.PM10).toString(), monitorId, data, data2});
+        res.status(200);
     }
+    else {
+        res.redirect('/login');
+    }
+}catch(error){
+    console.error(error);
+}
+
 })
 
 
