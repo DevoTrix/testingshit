@@ -39,6 +39,7 @@ async function createNewUser(eml, usr, pswd) {
         });
       });
     }
+    await con.release();
   }catch(error){
     console.error(error);
   }

@@ -22,7 +22,7 @@ async function grabsnLastSeen(){
         const query = "SELECT sn, last_seen FROM Devices;"
         const rows = await con.query(query);
         const data = rows.rows;
-        con.release();
+        await con.release();
         return data;
     } catch(error){
         console.error("Error Pulling from db: " + error);
