@@ -95,8 +95,12 @@
             const data = {{{datas}}};
             var markerData = [];
             for(var i = 0; i < data.length; i++){
-                
-                const colorValue = getColorForValue(data[i].pm25, selectedColorRange);
+                var colorValue;
+                if(pmtype === "pm25"){
+                    colorValue = getColorForValue(data[i].pm25, selectedColorRange);
+                }else{
+                    colorValue = getColorForValue(data[i].pm10, selectedColorRange);
+                }
                 const markerHtmlStyles = `
                 background-color: ${colorValue};
                 width: 3rem;
@@ -132,7 +136,7 @@
                         lat: Number(data[i].lat),
                         lon: Number(data[i].lon),
                         custIcon:icon,
-                        popupContent: `Serial Number: ${data[i].sn}<br> Latitude: ${data[i].lat}<br>Longitude: ${data[i].lon}<br>pm25: ${data[i].pm25}<br> Timestamp: ${data[i].timestamp}<br>`
+                        popupContent: `Serial Number: ${data[i].sn}<br> Latitude: ${data[i].lat}<br>Longitude: ${data[i].lon}<br>pm10: ${data[i].pm10}<br> Timestamp: ${data[i].timestamp}<br>`
                     }
                 }
                 result = {{{data}}}
