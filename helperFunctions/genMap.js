@@ -30,6 +30,7 @@ async function grabData(pm_type){
             query = "SELECT Devices.sn,Devices.description, Devices.lat, Devices.lon, Data.pm10, Data.pm25, Data.timestamp FROM Devices LEFT JOIN ( SELECT d1.* FROM Data d1 JOIN ( SELECT sn, MAX(timestamp) AS max_timestamp FROM Data GROUP BY sn ) d2 ON d1.sn = d2.sn AND d1.timestamp = d2.max_timestamp ) AS Data ON Data.sn = Devices.sn ORDER BY Devices.sn";
         }
         const result = await con.query(query);
+        await con.release();
         const queryResult = result.rows;
         return queryResult;
     } catch(error){

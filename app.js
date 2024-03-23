@@ -39,6 +39,7 @@ async function createNewUser(eml, usr, pswd) {
         });
       });
     }
+    await con.release();
   }catch(error){
     console.error(error);
   }
@@ -155,9 +156,9 @@ app.get("/researcher", async (req, res) => {
 const loginRouter = require("./routes/login.js");
 app.use("/login", loginRouter);
 
-//creates participant page
-const participantRouter = require("./routes/participant.js");
-app.use("/participant", participantRouter);
+//creates success page
+const successRouter = require("./routes/participant.js");
+app.use("/success-page", successRouter);
 
 ///////////////////////////
 
@@ -407,10 +408,10 @@ app.get("/monitorIds", async (req, res) => {
 //////////////////////////////////////////////
 
 const pullData = require("./helperFunctions/pullData.js");
-app.post("/pushData", async (req, res)=>{
-  await pullData();
-  res.send({"message": "DataBase updated"});
-})
+// app.post("/pushData", async (req, res)=>{
+//   await pullData();
+//   res.send({"message": "DataBase updated"});
+// })
 const {getID, changeMap} = require('./routes/changepm.js')
 app.post("/changePMType", async (req, res) => {
   const selectedPMType = req.body.pm_type;
@@ -418,6 +419,12 @@ app.post("/changePMType", async (req, res) => {
   res.redirect("/map"); //redirects back to the map page
 });
 
+const pullDevice = require("./helperFunctions/pullMore.js")
+app.post("/pullDevice", async(req, res)=>{
+  await pullDevice();
+  await  pullData();
+  res.send({"message": "DataBase updated"});
+});
 app.post("/chart", async (req, res)=>{
   const sn = req.body.sn;
   // // do a function here to get base64

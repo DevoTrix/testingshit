@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+// sql imports
+// const mysql = require("mysql2");
 const { Pool } = require("pg");
 require("dotenv").config();
 
@@ -51,7 +53,6 @@ async function fetchPMValues(monitorId) {
         let result;
         result = await con.query(query, value);
         const rows = result.rows[0];
-        console.log(rows);
         await con.release();
         // const result = rows[0];
         return rows;
@@ -83,6 +84,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+
 // async function makeImgSRC() {
 //     try{
 //         const response = await fetch('/api/aqi.py', {
@@ -101,17 +103,19 @@ const path = require('path');
 //     }
 //   } 
 
-var aqi = 50;
+
+var aqi = 50; // default value
 
 router.get('/', async (req,res) => {
-    monitorId = req.query.monitorId
+    monitorId = req.query.monitorId;
     // uses python-shell to create the img src from aqi.py
     try{
-        var data = await generateImage(monitorId); 
+        var {data, data2} = await generateImage(monitorId); 
         data = JSON.stringify(data)
+        data2 = JSON.stringify(data2)
         aqi = await getAQIValues(monitorId); 
         if (monitorId) {
-            res.render("participant", { title: 'Participant View', aqi, monitorId, data, aqiScore : Math.max(aqi.PM25, aqi.PM10)});
+            res.render("participant", { title: 'SUCCESS PAGE ',aqi, aqiScore : Math.max(aqi.PM25, aqi.PM10).toString(), monitorId, data, data2});
             res.status(200);
         }
         else {
