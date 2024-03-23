@@ -83,6 +83,7 @@ const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+
 // async function makeImgSRC() {
 //     try{
 //         const response = await fetch('/api/aqi.py', {
@@ -100,6 +101,7 @@ const path = require('path');
 //         throw error;
 //     }
 //   } 
+
 
 
 var aqi = 50;
