@@ -107,7 +107,7 @@ const path = require('path');
 var aqi = 50;
 
 router.get('/', async (req,res) => {
-    monitorId = req.query.monitorId;
+    monitorId = req.query.monitorId
     // uses python-shell to create the img src from aqi.py
     try{
         var {data, data2} = await generateImage(monitorId); 
