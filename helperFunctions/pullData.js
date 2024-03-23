@@ -30,7 +30,12 @@ async function grabsnLastSeen(){
 }
 async function pullSpecific(serialNumber, last_seen){
     const date = last_seen.split("T")[0]
-    const url = `https://api.quant-aq.com/device-api/v1/data/resampled/?sn=${serialNumber}&start_date=${date}&end_date=${date}&period=1h`
+    // console.log(date);
+    var dateobj = new Date(date);
+    dateobj.setDate(dateobj.getDate() + 1);
+    const enddate = dateobj.toISOString().split("T")[0];
+    console.log(enddate);
+    const url = `https://api.quant-aq.com/device-api/v1/data/resampled/?sn=${serialNumber}&start_date=${date}&end_date=${enddate}&period=1h`
     console.log(url)
     const list = await fetch(url, {method:'GET', headers: headers})
     .then( response =>{
@@ -70,7 +75,7 @@ async function pullData() {
     var data = await grabsnLastSeen();
 
     // Set a batch size for batch inserts
-    const batchSize = 250;
+    const batchSize = 48;
     const dataLength = data.length;
 
     for (let i = 0; i < dataLength; i++) {
@@ -79,8 +84,8 @@ async function pullData() {
             if (!list) {
                 continue;
             }
-
-            const rows = list.map(row => [row.sn, row.pm25, row.pm10, row.timestamp]);
+            const filteredRows = list.filter(row => row.pm25 !== null && row.pm10 !== null);
+            const rows = filteredRows.map(row => [row.sn, row.pm25, row.pm10, row.period_start]);
 
             // Batch insert into the database
             for (let j = 0; j < rows.length; j += batchSize) {

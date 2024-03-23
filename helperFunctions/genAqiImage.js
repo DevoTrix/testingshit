@@ -40,7 +40,12 @@ async function generateImage(description){
               borderColor: 'red',
               data: result.map(row=>row.pm25),
               fill: false
-            },
+            }
+        ]
+    };
+    const data2 = {
+        labels: result.map(row=>row.timestamp),
+        datasets: [
             {
               label: 'pm10',
               borderColor: 'blue',
@@ -49,7 +54,6 @@ async function generateImage(description){
             }
         ]
     };
-    return data;
+    return {data, data2};
 }
-
 module.exports = generateImage;

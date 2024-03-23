@@ -99,29 +99,46 @@
                         levels.</p>
                 </div>
             </div>
-            <canvas id="myChart" class = "element"></canvas>
+            <canvas id="pm25" class = "element"></canvas>
+            <canvas id="pm10" class = "element"></canvas>
             <script>
                 const chartData = {{{data}}};
+                const chartData2 = {{{data2}}}''
             </script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
             document.addEventListener("DOMContentLoaded", async function() {
                 
-        const ctx = document.getElementById('myChart').getContext('2d');
-            const options = {
-                scales: {
-                yAxes: [{
-                    ticks: {
-                    beginAtZero: true
-                    }
+                const ctx = document.getElementById('pm25').getContext('2d');
+                const options = {
+                    scales: {
+                    yAxes: [{
+                        ticks: {
+                        beginAtZero: true
+                        }
 
-                }]
-                }
-            };
-            const myChart = new Chart(ctx, {
-            type: 'line',
-            data: {{{data}}}
-            });
+                    }]
+                    }
+                };
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {{{data}}}
+                });
+                const ctx2 = document.getElementById('pm10').getContext('2d');
+                const options2 = {
+                    scales: {
+                    yAxes: [{
+                        ticks: {
+                        beginAtZero: true
+                        }
+
+                    }]
+                    }
+                };
+                const myChart2 = new Chart(ctx2, {
+                    type: 'line',
+                    data: {{{data2}}}
+                });
             });
 
             </script>
