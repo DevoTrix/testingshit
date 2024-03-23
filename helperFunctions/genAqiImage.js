@@ -18,7 +18,6 @@ async function retrieveData(description){
         const queryResponse = await con.query(query, value);
         await con.query();
         result = queryResponse.rows;
-        await con.release();
         return result;
 
     } catch(error){
