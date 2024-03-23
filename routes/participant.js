@@ -79,32 +79,11 @@ async function getAQIValues(monitorId) {
     
     // console.log(aqiPM25);
 }
-const { exec } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-
-// async function makeImgSRC() {
-//     try{
-//         const response = await fetch('/api/aqi.py', {
-//             method:'POST',
-//             headers: {
-//                 "description": monitorId
-//             }
-//         });
-//         const data = await response.json();
-//         img_src = "data:image/png;base64,";
-//         img_src = img_src.concat(data.b64);
-//     }
-//     catch(error){
-//         console.error("Error Fetching Data: ", error);
-//         throw error;
-//     }
-//   } 
 
 var aqi = 50;
 
 router.get('/', async (req,res) => {
-    monitorId = req.query.monitorId
+    monitorId = req.query.monitorId;
     // uses python-shell to create the img src from aqi.py
     try{
         var {data, data2} = await generateImage(monitorId); 
