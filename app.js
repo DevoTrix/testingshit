@@ -407,7 +407,7 @@ app.get("/monitorIds", async (req, res) => {
 });
 //////////////////////////////////////////////
 
-// const pullData = require("./helperFunctions/pullData.js");
+const pullData = require("./helperFunctions/pullData.js");
 // app.post("/pushData", async (req, res)=>{
 //   await pullData();
 //   res.send({"message": "DataBase updated"});
@@ -418,9 +418,12 @@ app.post("/changePMType", async (req, res) => {
   changeMap(selectedPMType);
   res.redirect("/map"); //redirects back to the map page
 });
+
 const pullDevice = require("./helperFunctions/pullMore.js")
 app.post("/pullDevice", async(req, res)=>{
   await pullDevice();
+  await  pullData();
+  res.send({"message": "DataBase updated"});
 });
 app.post("/chart", async (req, res)=>{
   const sn = req.body.sn;
