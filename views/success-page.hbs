@@ -21,7 +21,6 @@
             }
         }
     </style>
-
     <body class="loginBackground">
 
         <div class="container p-3">
@@ -39,7 +38,6 @@
         </div>
 
 
-
         <div class="container p-3 mt-3 text-center">
 
             <div class="row">
@@ -50,7 +48,11 @@
                         different levels of air pollution. The AQI ranges from 0 to 500, where lower values indicate 
                         better air quality and higher values indicate worse air quality. <br> <br>
                         The AQI is divided into different categories, each associated with a color code and indicating 
-                        the level of hazards. Find out more at https://www.airnow.gov/aqi/aqi-basics/.</p>
+                        the level of hazards. The image below has a more detailed description of how the colors 
+                        correspond to the AQI value.</p>
+                </div>
+                <div class = "col-sm">
+                    <img id = 'aqiChart' class="img-fluid mb-4" src="/images/aqi_colors.png" alt="AQI Colors and Values, and What They Mean">
                 </div>
             </div>
 
@@ -60,21 +62,27 @@
         <script>
             if ({{ aqiScore }} <= 50) {
                 document.getElementById('aqi').style.color = "lime";
+                document.getElementById('aqiChart').src = "/images/aqi_colors1.png";
             }
             else if ({{ aqiScore }} <= 100) {
                 document.getElementById('aqi').style.color = "yellow";
+                document.getElementById('aqiChart').src = "/images/aqi_colors2.png";
             }
             else if ({{ aqiScore }} <= 150) {
                 document.getElementById('aqi').style.color = "orange";
+                document.getElementById('aqiChart').src = "/images/aqi_colors3.png";
             }
             else if ({{ aqiScore }} <= 200) {
                 document.getElementById('aqi').style.color = "red";
+                document.getElementById('aqiChart').src = "/images/aqi_colors4.png";
             }
             else if ({{ aqiScore }} <= 300) {
                 document.getElementById('aqi').style.color = "purple";
+                document.getElementById('aqiChart').src = "/images/aqi_colors4.png";
             }
             else {
                 document.getElementById('aqi').style.color = "maroon";
+                document.getElementById('aqiChart').src = "/images/aqi_colors6.png";
             }
         </script>
 

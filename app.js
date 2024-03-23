@@ -155,9 +155,9 @@ app.get("/researcher", async (req, res) => {
 const loginRouter = require("./routes/login.js");
 app.use("/login", loginRouter);
 
-//creates participant page
-const participantRouter = require("./routes/participant.js");
-app.use("/participant", participantRouter);
+//creates success page
+const successRouter = require("./routes/success-page.js");
+app.use("/success-page", successRouter);
 
 ///////////////////////////
 
@@ -406,11 +406,11 @@ app.get("/monitorIds", async (req, res) => {
 });
 //////////////////////////////////////////////
 
-const pullData = require("./helperFunctions/pullData.js");
-app.post("/pushData", async (req, res)=>{
-  await pullData();
-  res.send({"message": "DataBase updated"});
-})
+// const pullData = require("./helperFunctions/pullData.js");
+// app.post("/pushData", async (req, res)=>{
+//   await pullData();
+//   res.send({"message": "DataBase updated"});
+// })
 const {getID, changeMap} = require('./routes/changepm.js')
 app.post("/changePMType", async (req, res) => {
   const selectedPMType = req.body.pm_type;
