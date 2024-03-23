@@ -16,6 +16,7 @@ async function retrieveData(description){
         const query = "SELECT Data.pm25, Data.pm10, timestamp FROM Data, Devices WHERE Data.sn = Devices.sn AND Devices.description = $1 AND timestamp > $2 ORDER BY timestamp";
         const value = [description, threshstring];
         const queryResponse = await con.query(query, value);
+        await con.query();
         result = queryResponse.rows;
         return result;
 
