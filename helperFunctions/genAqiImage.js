@@ -16,6 +16,7 @@ async function retrieveData(description){
         const query = "SELECT Data.pm25, Data.pm10, timestamp FROM Data, Devices WHERE Data.sn = Devices.sn AND Devices.description = $1 AND timestamp > $2 ORDER BY timestamp";
         const value = [description, threshstring];
         const queryResponse = await con.query(query, value);
+        await con.query();
         result = queryResponse.rows;
         return result;
 
@@ -40,7 +41,12 @@ async function generateImage(description){
               borderColor: 'red',
               data: result.map(row=>row.pm25),
               fill: false
-            },
+            }
+        ]
+    };
+    const data2 = {
+        labels: result.map(row=>row.timestamp),
+        datasets: [
             {
               label: 'pm10',
               borderColor: 'blue',
@@ -49,7 +55,6 @@ async function generateImage(description){
             }
         ]
     };
-    return data;
+    return {data, data2};
 }
-
 module.exports = generateImage;
