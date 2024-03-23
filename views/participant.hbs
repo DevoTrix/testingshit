@@ -51,9 +51,6 @@
                         the level of hazards. The image below has a more detailed description of how the colors 
                         correspond to the AQI value.</p>
                 </div>
-                <div class = "col-sm">
-                    <img id = 'aqiChart' class="img-fluid mb-4" src="/images/aqi_colors.png" alt="AQI Colors and Values, and What They Mean">
-                </div>
             </div>
 
         </div>
@@ -62,27 +59,21 @@
         <script>
             if ({{ aqiScore }} <= 50) {
                 document.getElementById('aqi').style.color = "lime";
-                document.getElementById('aqiChart').src = "/images/aqi_colors1.png";
             }
             else if ({{ aqiScore }} <= 100) {
                 document.getElementById('aqi').style.color = "yellow";
-                document.getElementById('aqiChart').src = "/images/aqi_colors2.png";
             }
             else if ({{ aqiScore }} <= 150) {
                 document.getElementById('aqi').style.color = "orange";
-                document.getElementById('aqiChart').src = "/images/aqi_colors3.png";
             }
             else if ({{ aqiScore }} <= 200) {
                 document.getElementById('aqi').style.color = "red";
-                document.getElementById('aqiChart').src = "/images/aqi_colors4.png";
             }
             else if ({{ aqiScore }} <= 300) {
                 document.getElementById('aqi').style.color = "purple";
-                document.getElementById('aqiChart').src = "/images/aqi_colors4.png";
             }
             else {
                 document.getElementById('aqi').style.color = "maroon";
-                document.getElementById('aqiChart').src = "/images/aqi_colors6.png";
             }
         </script>
 
@@ -105,11 +96,11 @@
                         levels.</p>
                 </div>
             </div>
-            <canvas id="pm25" class = "element"></canvas>
-            <canvas id="pm10" class = "element"></canvas>
+                <canvas id="pm25" class = "element"></canvas>
+                <canvas id="pm10" class = "element"></canvas>
             <script>
                 const chartData = {{{data}}};
-                const chartData2 = {{{data2}}}''
+                const chartData2 = {{{data2}}};
             </script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>

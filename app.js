@@ -156,7 +156,7 @@ const loginRouter = require("./routes/login.js");
 app.use("/login", loginRouter);
 
 //creates success page
-const successRouter = require("./routes/success-page.js");
+const successRouter = require("./routes/participant.js");
 app.use("/success-page", successRouter);
 
 ///////////////////////////
