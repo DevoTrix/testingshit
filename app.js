@@ -221,7 +221,7 @@ EmailJS team
 
   var msg = {
     from: "jchang1211@gmail.com",
-    to: "jchan443@ucr.edu",
+    to: email,
     subject: "Salton Sea Researcher Registration",
     text: message,
   };
