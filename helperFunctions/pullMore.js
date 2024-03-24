@@ -57,6 +57,7 @@ async function doLastSeen(){
     try{
         const data = await pullDevice();
         const list = data.map(row=>[row.sn, row.description, row.geo.lat, row.geo.lon, row.last_seen]);
+        
         for(var i = 0; i < list.length; i++){
             quer("INSERT INTO Devices (sn,description, lat, lon, last_seen) VALUES (%s,%s, %s, %s, %s) ON CONFLICT (sn)  DO UPDATE SET lat = EXCLUDED.lat, lon = EXCLUDED.lon, last_seen = EXCLUDED.last_seen", list[0]);
         }
@@ -66,4 +67,4 @@ async function doLastSeen(){
 }
 
 
-module.exports = pullDevice;
+module.exports = doLastSeen;

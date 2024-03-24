@@ -419,9 +419,9 @@ app.post("/changePMType", async (req, res) => {
   res.redirect("/map"); //redirects back to the map page
 });
 
-const pullDevice = require("./helperFunctions/pullMore.js")
+const doLastSeen = require("./helperFunctions/pullMore.js")
 app.post("/pullDevice", async(req, res)=>{
-  await pullDevice();
+  await doLastSeen();
   await  pullData();
   res.send({"message": "DataBase updated"});
 });
