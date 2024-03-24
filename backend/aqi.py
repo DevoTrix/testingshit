@@ -10,6 +10,7 @@ load_dotenv()
 import numpy as np
 import io
 from io import BytesIO
+import psycopg2 as postgre
 import base64
 # import sys
 
@@ -54,15 +55,53 @@ def generateAqi( desc="default" ):
         plt.title(f'PM25 and PM10 Concentrations for {desc}')
         plt.legend()
         #plt.show()
-
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
-        buf.close()
+        pth = "public/javascripts/helperFunctions/pm" + desc  + ".png"
+        # buf = io.BytesIO()
+        # plt.savefig(buf, format='png')
+        # image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+        # buf.close()
+        # plt.close()
+        plt.savefig(pth)
         plt.close()
         # print(image_base64)
-        return image_base64
+        # return image_base64
+def connect():
+    mydb = postgre.connect(
+        os.environ['POSTGRES_URL'],
+        user = os.environ['POSTGRES_USER'],
+        password = os.environ['POSTGRES_PASSWORD'],
+    )
+    return mydb
 
-print(generateAqi('SSIF_A7_666'))
+def getUniqueDevices():
+    #######################################################################
+    ## gets all of the unique devices                                    ##
+    ## PARAMETERS:                                                       ##
+    ## Return:                                                           ##
+    ##   list: list of unique device names                               ##
+    #######################################################################
+
+    mydb = connect()
+    query = "SELECT description FROM Devices"
+    mycursor = mydb.cursor()
+    mycursor.execute(query)
+    results = mycursor.fetchall()
+    dataframe = pd.DataFrame(results)
+    list = []
+    for i, sn in dataframe.iterrows():
+        list.append(sn[0])
+    mycursor.close()
+    mydb.close()
+    return list
+
+
+def generateAll():
+    list = getUniqueDevices()
+    print(list)
+    for desc in list:
+        print(desc)
+        generateAqi(desc)
+
+generateAll()
 
  
