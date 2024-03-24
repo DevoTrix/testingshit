@@ -180,55 +180,56 @@ app.route("/invite").post(async (req, res) => {
       return;
     }
     await con.release();
+  
+      const token = jwt.sign({ email: email }, process.env.key, {
+        algorithm: "HS256",
+        allowInsecureKeySizes: true,
+        expiresIn: 7200, // 24 hours
+      });
+      const registersite = "http://localhost:3000/register?token=";
+      const site = registersite + token;
+      var data = {
+        link: site,
+      };
+      var message = `
+      Hello ${email},
+
+    This email is to let you sign up for  your account on the Salton Sea Air Filtration Website.
+
+    Please use this link 
+
+    ${site}
+
+    If you have any questions please email Professor Porter.
+
+    If you are not a part of his team, please ignore this message.
+
+    Best wishes,
+    EmailJS team
+      `;
+      // email the message here
+      var transport = nodemailer.createTransport({
+        host: "live.smtp.mailtrap.io",
+        port: 587,
+        auth: {
+          user: process.env.mailtrapeuser,
+          pass: process.env.mailtrappassword,
+        },
+      });
+
+      var msg = {
+        from: "jchang1211@gmail.com",
+        to: email,
+        subject: "Salton Sea Researcher Registration",
+        text: message,
+      };
+      transport.sendMail(msg);
+      console.log(message);
+
+      res.redirect("/invite");
   } catch (error) {
     console.error(error);
   }
-  const token = jwt.sign({ email: email }, process.env.key, {
-    algorithm: "HS256",
-    allowInsecureKeySizes: true,
-    expiresIn: 7200, // 24 hours
-  });
-  const registersite = "http://localhost:3000/register?token=";
-  const site = registersite + token;
-  var data = {
-    link: site,
-  };
-  var message = `
-  Hello ${email},
-
-This email is to let you sign up for  your account on the Salton Sea Air Filtration Website.
-
-Please use this link 
-
-${site}
-
-If you have any questions please email Professor Porter.
-
-If you are not a part of his team, please ignore this message.
-
-Best wishes,
-EmailJS team
-  `;
-  // email the message here
-  var transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: process.env.mailtrapeuser,
-      pass: process.env.mailtrappassword,
-    },
-  });
-
-  var msg = {
-    from: "jchang1211@gmail.com",
-    to: email,
-    subject: "Salton Sea Researcher Registration",
-    text: message,
-  };
-  transport.sendMail(msg);
-  console.log(message);
-
-  res.redirect("/invite");
   // emailjs.init({publicKey:process.env.emjs});
   // emailjs.send(process.env.sid, process.env.tempid, data);
 });
