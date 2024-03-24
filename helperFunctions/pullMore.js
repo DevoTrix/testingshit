@@ -56,11 +56,15 @@ async function quer(query, values) {
 async function doLastSeen(){
     try{
         const data = await pullDevice();
+        console.log(data)
         const list = data.map(row=>[row.sn, row.description, row.geo.lat, row.geo.lon, row.last_seen]);
-        
+        console.log(list)
+        const pool = new Pool(postgreConfig);
+        const con = await pool.connect();
         for(var i = 0; i < list.length; i++){
-            quer("INSERT INTO Devices (sn,description, lat, lon, last_seen) VALUES (%s,%s, %s, %s, %s) ON CONFLICT (sn)  DO UPDATE SET lat = EXCLUDED.lat, lon = EXCLUDED.lon, last_seen = EXCLUDED.last_seen", list[0]);
+            await con.query("INSERT INTO Devices (sn,description, lat, lon, last_seen) VALUES ($1,$2, $3, $4, $5) ON CONFLICT (sn)  DO UPDATE SET lat = EXCLUDED.lat, lon = EXCLUDED.lon, last_seen = EXCLUDED.last_seen", list[i]);
         }
+        await con.release();
     } catch(error){
         console.error(error);
     }
