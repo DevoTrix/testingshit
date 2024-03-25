@@ -219,7 +219,7 @@ app.route("/invite").post(async (req, res) => {
 
       var msg = {
         from: "jchang1211@gmail.com",
-        to: email,
+        to: "jchan443@ucr.edu",
         subject: "Salton Sea Researcher Registration",
         text: message,
       };
