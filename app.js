@@ -218,7 +218,7 @@ app.route("/invite").post(async (req, res) => {
       });
 
       var msg = {
-        from: "jchang1211@gmail.com",
+        from: "mailtrap@testingshit-psi.vercel.app",
         to: "jchan443@ucr.edu",
         subject: "Salton Sea Researcher Registration",
         text: message,
