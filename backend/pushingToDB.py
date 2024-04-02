@@ -4,5 +4,6 @@ def updateDBs():
     dc.checkOffline()
     dc.updateAllHealth()
     dc.updateAllDataFraction()
+    dc.pushFullDB()
     print('ok')
-updateDBs()
+# updateDBs()

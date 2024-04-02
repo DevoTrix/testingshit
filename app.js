@@ -408,11 +408,13 @@ app.get("/monitorIds", async (req, res) => {
 });
 //////////////////////////////////////////////
 
-const pullData = require("./helperFunctions/pullData.js");
+const {pullData,pushData, updateHealth} = require("./helperFunctions/pullData.js");
 app.post("/pushData", async (req, res)=>{
   await pullData();
   res.send({"message": "DataBase updated"});
 })
+
+updateHealth();
 const {getID, changeMap} = require('./routes/changepm.js')
 app.post("/changePMType", async (req, res) => {
   const selectedPMType = req.body.pm_type;
@@ -420,7 +422,8 @@ app.post("/changePMType", async (req, res) => {
   res.redirect("/map"); //redirects back to the map page
 });
 
-const doLastSeen = require("./helperFunctions/pullMore.js")
+const doLastSeen = require("./helperFunctions/pullMore.js");
+// const { update } = require("plotly.js");
 app.post("/pullDevice", async(req, res)=>{
   await doLastSeen();
   await  pullData();
